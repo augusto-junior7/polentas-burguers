@@ -33,3 +33,8 @@ class Employee(User):
             self._salary = float(value)
         else:
             raise IsNotInstanceError("Salary must be a number")
+
+    def display_info(self):
+        print(
+            f"[Funcionário] ID: {self._id} | Nome: {self._name} | Cargo: {self._position}"
+        )

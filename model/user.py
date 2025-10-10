@@ -20,12 +20,29 @@ class User(ABC):
 
         if isinstance(name, str):
             self._name = name
+        else:
+            raise IsNotInstanceError("Name must be a string")
         if isinstance(cpf, str):
-            self._cpf = cpf
+            if is_valid_cpf(cpf):
+                self._cpf = cpf
+            else:
+                raise InvalidCPFError("Invalid CPF")
+        else:
+            raise IsNotInstanceError("CPF must be a string")
         if isinstance(email, str):
-            self._email = email
+            if is_valid_email(email):
+                self._email = email
+            else:
+                raise InvalidEmailError("Invalid email address")
+        else:
+            raise IsNotInstanceError("Email must be a string")
         if isinstance(phone, str):
-            self._phone = phone
+            if is_valid_phone(phone):
+                self._phone = phone
+            else:
+                raise InvalidPhoneError("Invalid phone number")
+        else:
+            raise IsNotInstanceError("Phone must be a string")
 
     @property
     def id(self) -> int:

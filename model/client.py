@@ -1,15 +1,14 @@
-from typing import List, Tuple
-
 from exceptions.is_not_instance import IsNotInstanceError
-from model.order import Order
 from model.user import User
 
 
 class Client(User):
-    def __init__(self, name: str, cpf: str, email: str, address: str):
-        super().__init__(name, cpf, email)
+    def __init__(
+        self, name: str, cpf: str, email: str, phone: str, address: str
+    ):
+
+        super().__init__(name, cpf, email, phone)
         self._address = None
-        self._orders: List[Order] = []
 
         if isinstance(address, str):
             self._address = address
@@ -27,20 +26,7 @@ class Client(User):
         else:
             raise IsNotInstanceError("Address must be a string")
 
-    @property
-    def orders(self) -> Tuple[Order, ...]:
-        return tuple(self._orders)
-
-    def add_order(self, order: Order) -> None:
-        if not isinstance(order, Order):
-            raise IsNotInstanceError("Order must be an instance of Order")
-        self._orders.append(order)
-
-    def remove_order(self, order: Order) -> None:
-        if order in self._orders:
-            self._orders.remove(order)
-        else:
-            raise ValueError("Order not found in client's orders")
-
-    def clear_orders(self) -> None:
-        self._orders.clear()
+    def display_info(self):
+        print(
+            f"[Cliente] ID: {self._id} | Nome: {self._name} | Endereço: {self._address}"
+        )
