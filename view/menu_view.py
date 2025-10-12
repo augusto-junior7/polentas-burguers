@@ -14,7 +14,7 @@ class MenuView:
 
     def get_menu_item_type(self) -> str | None:
         print("Selecione o tipo de item a ser adicionado:")
-        print("1: Burger")
+        print("1: Lanche")
         print("2: Bebida")
         print("0: Cancelar")
         choice = input("Opção: ")

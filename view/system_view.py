@@ -5,6 +5,7 @@ class SystemView:
         print("2: Gestão de Funcionários")
         print("3: Gestão de Cardápios")
         print("4: Criar Novo Pedido")
+        print("5: Relatórios")
         print("0: Sair do Sistema")
         return input("Escolha uma opção: ")
 
@@ -12,7 +13,9 @@ class SystemView:
         print("\n--- Gestão de Clientes ---")
         print("1: Adicionar Cliente")
         print("2: Listar Clientes")
-        # Adicione update/delete aqui se desejar
+        print("3: Buscar Cliente por CPF")
+        print("4: Atualizar Dados do Cliente")
+        print("5: Remover Cliente")
         print("0: Voltar ao Menu Principal")
         return input("Escolha uma opção: ")
 
