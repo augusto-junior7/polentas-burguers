@@ -8,7 +8,7 @@ class Burger(MenuItem):
         name: str,
         price: float,
         description: str,
-        patty_type: str = "Carne",
+        patty_type: str = "Carne bovina",
     ):
         super().__init__(name, price, description)
         self._patty_type = None

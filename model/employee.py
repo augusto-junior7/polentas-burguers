@@ -6,11 +6,23 @@ class Employee(User):
         self, name: str, cpf: str, email: str, phone: str, position: str
     ):
         super().__init__(name, cpf, email, phone)
+        self._id = None
         self._position = None
         self._salary = None
 
         if isinstance(position, str):
             self._position = position
+
+    @property
+    def id(self) -> int:
+        return self._id
+
+    @id.setter
+    def id(self, value: int):
+        if isinstance(value, int):
+            self._id = value
+        else:
+            raise IsNotInstanceError("ID must be an integer")
 
     @property
     def position(self) -> str:
