@@ -6,26 +6,30 @@ from view.employee_view import EmployeeView
 
 class EmployeeController:
     def __init__(self):
-        self._employees: List[Employee] = []
-        self._view = EmployeeView()
+        self.__employees: List[Employee] = []
+        self.__view = EmployeeView()
 
     def add_employee(self) -> None:
-        data = self._view.get_employee_data()
+        data = self.__view.get_employee_data()
         new_employee = Employee(
             name=data["name"],
             cpf=data["cpf"],
             email=data["email"],
             phone=data["phone"],
-            employee_code=data["employee_code"],
             position=data["position"],
         )
-        self._employees.append(new_employee)
-        self._view.display_success_message("Funcionário cadastrado com sucesso!")
+        # Verifica se o funcionário já existe na lista de funcionários
+        self.__employees.append(new_employee)
+        self.__view.display_success_message(
+            "Funcionário cadastrado com sucesso!"
+        )
 
     def list_employees(self) -> None:
-        if not self._employees:
-            self._view.display_message("Nenhum funcionário cadastrado.")
+        if not self.__employees:
+            self.__view.display_message("Nenhum funcionário cadastrado.")
         else:
-            self._view.display_employees(self._employees)
+            self.__view.display_employees(self.__employees)
 
-    # Você pode adicionar 'update' e 'delete' depois, seguindo o exemplo do ClientController
+    @property
+    def _employees(self) -> List[Employee]:
+        return self.__employees

@@ -12,9 +12,7 @@ class ClientController:
     def add_client(self) -> None:
         client_data = self._view.get_client_data()
         if self._find_client_by_cpf(client_data["cpf"]):
-            self._view.display_error_message(
-                "Client with this CPF already exists."
-            )
+            self._view.display_error_message("Cliente com este CPF já existe.")
             return
         new_client = Client(
             name=client_data["name"],
@@ -23,14 +21,23 @@ class ClientController:
             phone=client_data["phone"],
             address=client_data["address"],
         )
+        # Verificar se não existe antes de adicionar
         self._clients.append(new_client)
-        self._view.display_success_message("Client added successfully!")
+        self._view.display_success_message("Cliente cadastrado com sucesso!")
 
     def list_clients(self) -> None:
         if not self._clients:
-            self._view.display_message("No clients registered.")
+            self._view.display_message("Não há clientes cadastrados.")
         else:
             self._view.display_clients(self._clients)
+
+    def search_client_by_cpf(self) -> None:
+        cpf = self._view.get_client_cpf()
+        client = self._find_client_by_cpf(cpf)
+        if client:
+            self._view.display_clients([client])
+        else:
+            self._view.display_error_message("Cliente não encontrado.")
 
     def update_client(self) -> None:
         cpf = self._view.get_client_cpf()
@@ -46,9 +53,11 @@ class ClientController:
                 client.phone = new_data["phone"]
             if new_data.get("address"):
                 client.address = new_data["address"]
-            self._view.display_success_message("Client updated successfully!")
+            self._view.display_success_message(
+                "Cliente atualizado com sucesso!"
+            )
         else:
-            self._view.display_error_message("Client not found.")
+            self._view.display_error_message("Cliente não encontrado.")
 
     def delete_client(self) -> None:
         cpf = self._view.get_client_cpf()
@@ -56,9 +65,9 @@ class ClientController:
 
         if client:
             self._clients.remove(client)
-            self._view.display_success_message("Client deleted successfully!")
+            self._view.display_success_message("Cliente removido com sucesso!")
         else:
-            self._view.display_error_message("Client not found.")
+            self._view.display_error_message("Cliente não encontrado.")
 
     def _find_client_by_cpf(self, cpf: str) -> Client | None:
         for client in self._clients:

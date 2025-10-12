@@ -32,12 +32,13 @@ class OrderController:
             )
             return
 
-        if not self._employee_controller._employees:
+        if not self._employee_controller.employees:
             self._view.display_error_message(
                 "No employees available. Aborting order."
             )
             return
-        employee = self._employee_controller._employees[0]
+        # Implementar método que pegue o funcionário com menos pedidos, implemnetar no EmployeeController
+        employee = self._employee_controller.employees[0]
         self._view.display_message(
             f"Employee '{employee.name}' is handling the order."
         )
