@@ -1,17 +1,20 @@
 from typing import Any, Dict, List
 
 from model.client import Client
+from view.abstract_view import AbstractView
 
 
-class ClientView:
-    def display_message(self, message: str) -> None:
-        print(f"\n--- {message} ---\n")
-
-    def display_success_message(self, message: str) -> None:
-        print(f"\n✅ SUCESSO: {message}\n")
-
-    def display_error_message(self, message: str) -> None:
-        print(f"\n❌ ERRO: {message}\n")
+class ClientView(AbstractView):
+    def display_client_menu(self) -> str:
+        print("\n--- Gestão de Clientes ---")
+        print("1: Adicionar Cliente")
+        print("2: Listar Clientes")
+        print("3: Buscar Cliente por CPF")
+        print("4: Atualizar Dados do Cliente")
+        print("5: Remover Cliente")
+        print("6: Gerar Relatório de Clientes")
+        print("0: Voltar ao Menu Principal")
+        return input("Escolha uma opção: ")
 
     def get_client_data(self) -> Dict[str, Any]:
         print("--- Cadastro de Cliente ---")
@@ -56,3 +59,27 @@ class ClientView:
         if address:
             data["address"] = address
         return data
+
+    def display_client_report(self, client_data: dict) -> None:
+        """Exibe relatório de vendas por cliente."""
+        print("\n=== Relatório de Clientes ===")
+        if not client_data:
+            print("Nenhum dado disponível.")
+            return
+
+        print(f"{'Cliente':<30} {'Pedidos':<15} {'Receita (R$)':<15}")
+        print("-" * 60)
+
+        total_orders = 0
+        total_revenue = 0.0
+
+        for client_name, data in sorted(client_data.items()):
+            orders = data["orders"]
+            revenue = data["revenue"]
+            total_orders += orders
+            total_revenue += revenue
+            print(f"{client_name:<30} {orders:<15} {revenue:<15.2f}")
+
+        print("-" * 60)
+        print(f"{'TOTAL':<30} {total_orders:<15} {total_revenue:<15.2f}")
+        print("=" * 60)

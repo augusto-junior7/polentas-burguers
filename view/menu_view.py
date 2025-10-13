@@ -1,14 +1,17 @@
-from typing import List, Dict, Any
-from model.menu_item import MenuItem
+from typing import Any, Dict, List
+
 from model.burger import Burger
 from model.drink import Drink
+from model.menu_item import MenuItem
+from view.abstract_view import AbstractView
 
 
-class MenuView:
-    def display_menu_management_menu(self) -> str:
+class MenuView(AbstractView):
+    def display_menu_menu(self) -> str:
         print("\n--- Gestão de Cardápios ---")
         print("1: Adicionar Novo Item")
         print("2: Listar Todos os Itens")
+        print("3: Remover Item do Cardápio")
         print("0: Voltar ao Menu Principal")
         return input("Escolha uma opção: ")
 
@@ -29,7 +32,9 @@ class MenuView:
         return {"name": name, "price": price, "description": description}
 
     def get_burger_specific_data(self) -> Dict[str, Any]:
-        patty_type = input("Tipo de Carne (ex: Carne, Frango, Polenta): ")
+        patty_type = input(
+            "Tipo de Carne (ex: Carne, Frango, Peixe, Polenta): "
+        )
         return {"patty_type": patty_type}
 
     def get_drink_specific_data(self) -> Dict[str, Any]:
@@ -52,8 +57,5 @@ class MenuView:
                 print(base_info)
         print("-----------------")
 
-    def display_success_message(self, message: str) -> None:
-        print(f"\n✅ SUCESSO: {message}\n")
-
-    def display_error_message(self, message: str) -> None:
-        print(f"\n❌ ERRO: {message}\n")
+    def get_item_name(self) -> str:
+        return input("Digite o nome do item: ")

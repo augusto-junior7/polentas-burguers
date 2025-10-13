@@ -1,4 +1,7 @@
-class SystemView:
+from view.abstract_view import AbstractView
+
+
+class SystemView(AbstractView):
     def display_main_menu(self) -> str:
         print("\n--- Polenta's Burguers ---")
         print("1: Gestão de Clientes")
@@ -8,26 +11,3 @@ class SystemView:
         print("5: Relatórios")
         print("0: Sair do Sistema")
         return input("Escolha uma opção: ")
-
-    def display_client_menu(self) -> str:
-        print("\n--- Gestão de Clientes ---")
-        print("1: Adicionar Cliente")
-        print("2: Listar Clientes")
-        print("3: Buscar Cliente por CPF")
-        print("4: Atualizar Dados do Cliente")
-        print("5: Remover Cliente")
-        print("0: Voltar ao Menu Principal")
-        return input("Escolha uma opção: ")
-
-    def display_employee_menu(self) -> str:
-        print("\n--- Gestão de Funcionários ---")
-        print("1: Adicionar Funcionário")
-        print("2: Listar Funcionários")
-        print("0: Voltar ao Menu Principal")
-        return input("Escolha uma opção: ")
-
-    def display_message(self, message: str) -> None:
-        print(f"\n--- {message} ---\n")
-
-    def display_error_message(self, message: str) -> None:
-        print(f"\n❌ ERRO: {message}\n")
