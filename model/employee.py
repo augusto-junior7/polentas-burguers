@@ -3,10 +3,9 @@ from model.user import User
 
 class Employee(User):
     def __init__(
-        self, name: str, cpf: str, email: str, phone: str, position: str
+        self, id: int, name: str, cpf: str, email: str, phone: str, position: str
     ):
-        super().__init__(name, cpf, email, phone)
-        self._id = None
+        super().__init__(id, name, cpf, email, phone)
         self._position = None
         self._salary = None
 

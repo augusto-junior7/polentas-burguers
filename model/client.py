@@ -4,10 +4,16 @@ from model.user import User
 
 class Client(User):
     def __init__(
-        self, name: str, cpf: str, email: str, phone: str, address: str
+        self,
+        id: int,
+        name: str,
+        cpf: str,
+        email: str,
+        phone: str,
+        address: str,
     ):
 
-        super().__init__(name, cpf, email, phone)
+        super().__init__(id, name, cpf, email, phone)
         self._address = None
 
         if isinstance(address, str):
@@ -28,5 +34,5 @@ class Client(User):
 
     def display_info(self):
         print(
-            f"[Cliente] ID: {self._id} | Nome: {self._name} | Endereço: {self._address}"
+            f"[Cliente] ID: {self._id} | CPF: {self._cpf} | Nome: {self._name} | Endereço: {self._address}"
         )

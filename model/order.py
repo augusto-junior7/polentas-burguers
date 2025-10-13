@@ -1,3 +1,4 @@
+import random
 from datetime import datetime
 from typing import List, Tuple
 
@@ -11,12 +12,13 @@ from model.order_item import OrderItem
 class Order:
     def __init__(self, client: Client, employee: Employee):
 
-        self._id = None
+        self._id = random.randint(100000000, 999999999)
         self._client = None
         self._employee = None
         self._timestamp = datetime.now()
         self._items: List[OrderItem] = []
         self._total = 0.0
+        self._status = "Ativo"
 
         if isinstance(client, Client):
             self._client = client
@@ -66,6 +68,16 @@ class Order:
     @property
     def total(self) -> float:
         return self._total
+
+    @property
+    def status(self) -> str:
+        return self._status
+
+    @status.setter
+    def status(self, value: str):
+        if not isinstance(value, str):
+            raise IsNotInstanceError("Status must be a string")
+        self._status = value
 
     def add_item(self, menu_item: MenuItem, quantity: int) -> None:
         new_item = OrderItem(menu_item, quantity)

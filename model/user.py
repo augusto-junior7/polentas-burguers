@@ -11,13 +11,17 @@ from utils.phone_checker import is_valid_phone
 
 class User(ABC):
     @abstractmethod
-    def __init__(self, name: str, cpf: str, email: str, phone: str):
+    def __init__(self, id: int, name: str, cpf: str, email: str, phone: str):
         self._id = None
         self._name = None
         self._cpf = None
         self._email = None
         self._phone = None
 
+        if isinstance(id, int):
+            self._id = id
+        else:
+            raise IsNotInstanceError("ID must be an integer")
         if isinstance(name, str):
             self._name = name
         else:
@@ -49,15 +53,15 @@ class User(ABC):
         return self._id
 
     @property
-    def username(self) -> str:
+    def name(self) -> str:
         return self._name
 
-    @username.setter
-    def username(self, value: str):
+    @name.setter
+    def name(self, value: str):
         if isinstance(value, str):
             self._name = value
         else:
-            raise IsNotInstanceError("Username must be a string")
+            raise IsNotInstanceError("Name must be a string")
 
     @property
     def cpf(self) -> str:
