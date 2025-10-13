@@ -3,9 +3,9 @@ import time
 from collections import defaultdict
 from typing import List
 
-from model.employee import Employee
-from model.order import Order
-from view.employee_view import EmployeeView
+from models.employee import Employee
+from models.order import Order
+from views.employee_view import EmployeeView
 
 
 class EmployeeController:

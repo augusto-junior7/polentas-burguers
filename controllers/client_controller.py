@@ -3,9 +3,9 @@ import time
 from collections import defaultdict
 from typing import List
 
-from model.client import Client
-from model.order import Order
-from view.client_view import ClientView
+from models.client import Client
+from models.order import Order
+from views.client_view import ClientView
 
 
 class ClientController:

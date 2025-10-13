@@ -1,11 +1,11 @@
 from collections import defaultdict
 from typing import List
 
-from controller.client_controller import ClientController
-from controller.employee_controller import EmployeeController
-from controller.menu_controller import MenuController
-from model.order import Order
-from view.order_view import OrderView
+from controllers.client_controller import ClientController
+from controllers.employee_controller import EmployeeController
+from controllers.menu_controller import MenuController
+from models.order import Order
+from views.order_view import OrderView
 
 
 class OrderController:

@@ -1,7 +1,7 @@
-from model.burger import Burger
-from model.drink import Drink
-from model.menu import Menu
-from view.menu_view import MenuView
+from models.burger import Burger
+from models.drink import Drink
+from models.menu import Menu
+from views.menu_view import MenuView
 
 
 class MenuController:

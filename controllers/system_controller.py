@@ -1,8 +1,8 @@
-from controller.client_controller import ClientController
-from controller.employee_controller import EmployeeController
-from controller.menu_controller import MenuController
-from controller.order_controller import OrderController
-from view.system_view import SystemView
+from controllers.client_controller import ClientController
+from controllers.employee_controller import EmployeeController
+from controllers.menu_controller import MenuController
+from controllers.order_controller import OrderController
+from views.system_view import SystemView
 
 
 class SystemController:
