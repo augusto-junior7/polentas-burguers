@@ -3,7 +3,7 @@
 ```
 polentas-burguers/
 │
-├── controller/
+├── controllers/
 │   ├── __init__.py
 │   ├── client_controller.py
 │   ├── employee_controller.py
@@ -15,18 +15,28 @@ polentas-burguers/
 │   ├── __init__.py
 │   ├── entity_not_found.py
 │   ├── invalid_cpf.py
+│   ├── invalid_email.py
+│   ├── invalid_phone.py
 │   └── is_not_instance.py
 │
-├── model/
+├── models/
 │   ├── __init__.py
+│   ├── burger.py
+│   ├── client.py
+│   ├── drink.py
+│   ├── employee.py
 │   ├── menu.py
+│   ├── menu_item.py
 │   ├── order.py
-│   ├── person.py
+│   ├── order_item.py
+│   └── user.py
 │
 ├── utils/
-│   └── cpf_checker.py
+│   ├── cpf_checker.py
+│   ├── email_checker.py
+│   └── phone_checker.py
 │
-├── view/
+├── views/
 │   ├── __init__.py
 │   ├── abstract_view.py
 │   ├── client_view.py
@@ -35,5 +45,8 @@ polentas-burguers/
 │   ├── order_view.py
 │   └── system_view.py
 │
-└── main.py
+├── .gitignore
+├── ARCHITECTURE.md
+├── main.py
+└── README.md
 ```
