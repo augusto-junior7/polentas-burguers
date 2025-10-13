@@ -1,4 +1,5 @@
 from typing import List, Tuple
+
 from exceptions.is_not_instance import IsNotInstanceError
 from models.menu_item import MenuItem
 
@@ -14,7 +15,7 @@ class Menu:
     def add_item(self, item: MenuItem) -> None:
         if not isinstance(item, MenuItem):
             raise IsNotInstanceError("Item must be an instance of MenuItem")
-        
+
         for existing_item in self._items:
             if existing_item.name.lower() == item.name.lower():
                 raise ValueError(

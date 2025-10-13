@@ -22,9 +22,13 @@ class SystemController:
             option = self.__view.display_main_menu()
 
             if option == "1":  # Client Management
-                self.__client_controller.run_client_menu(self.__order_controller)
+                self.__client_controller.run_client_menu(
+                    self.__order_controller
+                )
             elif option == "2":  # Employee Management
-                self.__employee_controller.run_employee_menu(self.__order_controller)
+                self.__employee_controller.run_employee_menu(
+                    self.__order_controller
+                )
             elif option == "3":  # Menu Management
                 self.__menu_controller.run_menu_menu()
             elif option == "4":  # Order Management

@@ -1,5 +1,6 @@
 from models.menu_item import MenuItem
 
+
 class OrderItem:
     def __init__(self, menu_item: MenuItem, quantity: int):
         self._menu_item = None
@@ -9,7 +10,7 @@ class OrderItem:
             self._menu_item = menu_item
         else:
             raise IsNotInstanceError("Item must be an instance of MenuItem")
-        
+
         if isinstance(quantity, int) and quantity > 0:
             self._quantity = quantity
         else:

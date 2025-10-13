@@ -58,8 +58,10 @@ class OrderController:
                 "Sem funcionários disponíveis. Abortando pedido."
             )
             return
-        
-        employee = self.__employee_controller.get_lowest_workload_employee(self.__orders)
+
+        employee = self.__employee_controller.get_lowest_workload_employee(
+            self.__orders
+        )
         self.__view.display_message(
             f"O funcionário '{employee.name}' está atendendo o pedido."
         )
