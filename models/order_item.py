@@ -1,4 +1,4 @@
-from model.menu_item import MenuItem
+from models.menu_item import MenuItem
 
 class OrderItem:
     def __init__(self, menu_item: MenuItem, quantity: int):

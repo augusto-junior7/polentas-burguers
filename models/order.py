@@ -3,10 +3,10 @@ from datetime import datetime
 from typing import List, Tuple
 
 from exceptions.is_not_instance import IsNotInstanceError
-from model.client import Client
-from model.employee import Employee
-from model.menu_item import MenuItem
-from model.order_item import OrderItem
+from models.client import Client
+from models.employee import Employee
+from models.menu_item import MenuItem
+from models.order_item import OrderItem
 
 
 class Order:

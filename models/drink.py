@@ -1,5 +1,5 @@
 from exceptions.is_not_instance import IsNotInstanceError
-from model.menu_item import MenuItem
+from models.menu_item import MenuItem
 
 
 class Drink(MenuItem):

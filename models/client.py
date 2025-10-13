@@ -1,5 +1,5 @@
 from exceptions.is_not_instance import IsNotInstanceError
-from model.user import User
+from models.user import User
 
 
 class Client(User):
