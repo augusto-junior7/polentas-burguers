@@ -1,7 +1,7 @@
 from typing import Any, Dict, List
 
-from model.client import Client
-from view.abstract_view import AbstractView
+from models.client import Client
+from views.abstract_view import AbstractView
 
 
 class ClientView(AbstractView):

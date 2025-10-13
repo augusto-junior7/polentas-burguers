@@ -1,4 +1,4 @@
-from view.abstract_view import AbstractView
+from views.abstract_view import AbstractView
 
 
 class SystemView(AbstractView):

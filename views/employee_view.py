@@ -1,7 +1,7 @@
 from typing import Any, Dict, List
 
-from model.employee import Employee
-from view.abstract_view import AbstractView
+from models.employee import Employee
+from views.abstract_view import AbstractView
 
 
 class EmployeeView(AbstractView):

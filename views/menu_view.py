@@ -1,9 +1,9 @@
 from typing import Any, Dict, List
 
-from model.burger import Burger
-from model.drink import Drink
-from model.menu_item import MenuItem
-from view.abstract_view import AbstractView
+from models.burger import Burger
+from models.drink import Drink
+from models.menu_item import MenuItem
+from views.abstract_view import AbstractView
 
 
 class MenuView(AbstractView):

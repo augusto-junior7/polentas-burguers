@@ -1,7 +1,7 @@
 from typing import List
 
-from model.order import Order
-from view.abstract_view import AbstractView
+from models.order import Order
+from views.abstract_view import AbstractView
 
 
 class OrderView(AbstractView):
