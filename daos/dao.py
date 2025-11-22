@@ -2,6 +2,8 @@ import os
 import pickle
 from abc import ABC
 
+from exceptions.key_error import KeyErrorException
+
 
 class DAO(ABC):
     def __init__(self, datasource: str = "", folder: str = "data") -> None:
@@ -29,7 +31,7 @@ class DAO(ABC):
         try:
             return self.__cache[key]
         except KeyError:
-            pass
+            raise KeyErrorException()
 
     def get_all(self) -> list:
         return list(self.__cache.values())
@@ -37,14 +39,14 @@ class DAO(ABC):
     def update(self, key, obj) -> None:
         try:
             if self.__cache[key] is not None:
-                self.__cache[key] = obj 
-                self.__dump()  
+                self.__cache[key] = obj
+                self.__dump()
         except KeyError:
-            pass
+            raise KeyErrorException()
 
     def remove(self, key) -> None:
         try:
             self.__cache.pop(key)
             self.__dump()
         except KeyError:
-            pass
+            raise KeyErrorException()
