@@ -1,3 +1,4 @@
+import uuid
 from abc import ABC, abstractmethod
 from datetime import datetime
 
@@ -7,7 +8,7 @@ from exceptions.is_not_instance import IsNotInstanceError
 class MenuItem(ABC):
     @abstractmethod
     def __init__(self, name: str, price: float, description: str):
-        self._id = int(datetime.now().timestamp())
+        self._id = uuid.uuid4().int
         self._name = None
         self._price = None
         self._description = None

@@ -1,3 +1,4 @@
+import uuid
 from abc import ABC, abstractmethod
 
 from exceptions.invalid_cpf import InvalidCPFError
@@ -11,17 +12,13 @@ from utils.phone_checker import is_valid_phone
 
 class User(ABC):
     @abstractmethod
-    def __init__(self, id: int, name: str, cpf: str, email: str, phone: str):
-        self._id = None
+    def __init__(self, name: str, cpf: str, email: str, phone: str):
+        self._id = uuid.uuid4().int
         self._name = None
         self._cpf = None
         self._email = None
         self._phone = None
 
-        if isinstance(id, int):
-            self._id = id
-        else:
-            raise IsNotInstanceError("ID must be an integer")
         if isinstance(name, str):
             self._name = name
         else:

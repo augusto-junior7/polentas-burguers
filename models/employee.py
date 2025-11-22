@@ -4,14 +4,13 @@ from models.user import User
 class Employee(User):
     def __init__(
         self,
-        id: int,
         name: str,
         cpf: str,
         email: str,
         phone: str,
         position: str,
     ):
-        super().__init__(id, name, cpf, email, phone)
+        super().__init__(name, cpf, email, phone)
         self._position = None
         self._salary = None
 

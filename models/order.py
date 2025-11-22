@@ -1,4 +1,4 @@
-import random
+import uuid
 from datetime import datetime
 from typing import List, Tuple
 
@@ -11,8 +11,7 @@ from models.order_item import OrderItem
 
 class Order:
     def __init__(self, client: Client, employee: Employee):
-
-        self._id = random.randint(100000000, 999999999)
+        self._id = uuid.uuid4().int
         self._client = None
         self._employee = None
         self._timestamp = datetime.now()
