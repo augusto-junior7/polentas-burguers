@@ -17,7 +17,7 @@ class EmployeeView(AbstractView):
         return input("Escolha uma opção: ")
 
     def get_employee_data(self) -> Dict[str, Any]:
-        print("--- Cadastro de Funcionário ---")
+        print("--- Cadastro de Funcionário (vazio mantém igual) ---")
         name = input("Nome: ")
         cpf = input("CPF: ")
         email = input("Email: ")
