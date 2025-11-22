@@ -34,6 +34,22 @@ class OrderView(AbstractView):
         except ValueError:
             return 0
 
+    def get_item_index(self, max_index):
+        try:
+            index = (
+                int(
+                    input(
+                        f"Digite o número do item desejado (1 a {max_index}, ou 0 para concluir): "
+                    )
+                )
+                - 1
+            )
+            if index == -1:
+                return -1
+            return index
+        except ValueError:
+            return -1
+
     def display_current_order(self, order: Order) -> None:
         print("\n--- Pedido Atual ---")
         for item in order.items:
