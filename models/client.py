@@ -32,5 +32,5 @@ class Client(User):
 
     def display_info(self):
         print(
-            f"[Cliente] ID: {self.__id} | CPF: {self.__cpf} | Nome: {self.__name} | Endereço: {self.__address}"
+            f"[Cliente] ID: {super().id} | CPF: {super().cpf} | Nome: {super().name} | Endereço: {self.__address}"
         )
