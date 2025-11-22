@@ -21,7 +21,7 @@ class OrdersDAO(DAO):
 
     def update(self, order: Order):
         if order is not None and isinstance(order, Order):
-            super().add(order.id, order)
+            super().update(order.id, order)
 
     def delete(self, order_id: int):
         super().delete(order_id)

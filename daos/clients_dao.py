@@ -8,14 +8,14 @@ class ClientsDAO(DAO):
 
     def add(self, client: Client):
         if client is not None and isinstance(client, Client):
-            super().add(client)
+            super().add(client.id, client)
 
     def get(self, client_id: int) -> Client | None:
         client = super().get(client_id)
         if client is not None and isinstance(client, Client):
             return client
         return None
-    
+
     def get_all(self) -> list:
         return list(super().get_all())
 

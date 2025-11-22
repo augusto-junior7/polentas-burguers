@@ -8,14 +8,14 @@ class EmployeesDAO(DAO):
 
     def add(self, employee: Employee):
         if employee is not None and isinstance(employee, Employee):
-            super().add(employee)
+            super().add(employee.id, employee)
 
     def get(self, employee_id: int) -> Employee | None:
         employee = super().get(employee_id)
         if employee is not None and isinstance(employee, Employee):
             return employee
         return None
-    
+
     def get_all(self) -> list:
         return list(super().get_all())
 

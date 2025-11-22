@@ -11,7 +11,10 @@ class MenuDAO(DAO):
             super().add("menu", menu)
 
     def load(self) -> Menu | None:
-        menu = super().get("menu")
-        if menu is not None and isinstance(menu, Menu):
-            return menu
-        return None
+        try:
+            menu = super().get("menu")
+            if menu is not None and isinstance(menu, Menu):
+                return menu
+            return None
+        except Exception:
+            return None
