@@ -15,6 +15,9 @@ class ClientsDAO(DAO):
         if client is not None and isinstance(client, Client):
             return client
         return None
+    
+    def get_all(self) -> list:
+        return list(super().get_all())
 
     def update(self, client: Client):
         if client is not None and isinstance(client, Client):
