@@ -154,4 +154,12 @@ class EmployeeController:
         ]
 
         for e in initial_employees:
-            self.__employees.append(e)
+            self.__employees.append(
+                Employee(
+                    name=e["name"],
+                    cpf=e["cpf"],
+                    email=e["email"],
+                    phone=e["phone"],
+                    position=e["position"],
+                )
+            )
