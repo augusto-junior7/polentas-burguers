@@ -1,6 +1,6 @@
 # Polenta's Burguers
 
-Um projeto criado para a disciplina **DSOO I — Desenvolvimento de Sistemas Orientados a Objetos I** no curso de **Sistemas de Informação da UFSC**. O objetivo principal é aplicar conceitos de orientação a objetos, arquitetura MVC, persistência (local) e interface gráfica no desenvolvimento de um sistema Python.
+Um projeto criado para a disciplina **DSOO I — Desenvolvimento de Sistemas Orientados a Objetos I** no curso de **Sistemas de Informação** da **UFSC**. O objetivo principal é aplicar conceitos de orientação a objetos, arquitetura MVC, persistência (local) e interface gráfica no desenvolvimento de um sistema Python.
 
 ---
 
