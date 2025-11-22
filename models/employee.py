@@ -41,5 +41,5 @@ class Employee(User):
 
     def display_info(self):
         print(
-            f"[Funcionário] ID: {self.__id} | Nome: {self.__name} | Cargo: {self.__position}"
+            f"[Funcionário] ID: {super().id} | Nome: {super().name} | Cargo: {self.__position}"
         )
