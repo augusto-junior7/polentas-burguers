@@ -3,6 +3,7 @@ import time
 from collections import defaultdict
 from typing import List
 
+from daos.clients_dao import ClientsDAO
 from models.client import Client
 from models.order import Order
 from views.client_view import ClientView
@@ -10,9 +11,14 @@ from views.client_view import ClientView
 
 class ClientController:
     def __init__(self):
-        self.__clients: List[Client] = []
+        self.__clients_dao = ClientsDAO()
         self.__view = ClientView()
-        self._add_initial_clients()
+        if not self.__clients_dao.get_all():
+            self._add_initial_clients()
+
+    @property
+    def clients(self) -> List[Client]:
+        return self.__clients_dao.get_all()
 
     def run_client_menu(self, order_controller):
         while True:
@@ -55,14 +61,15 @@ class ClientController:
             self.__view.display_error_message(f"Erro ao criar cliente: {e}")
             return
 
-        self.__clients.append(new_client)
+        self.__clients_dao.add(new_client)
         self.__view.display_success_message("Cliente cadastrado com sucesso!")
 
     def list_clients(self) -> None:
-        if not self.__clients:
+        clients = self.__clients_dao.get_all()
+        if not clients:
             self.__view.display_message("Não há clientes cadastrados.")
         else:
-            self.__view.display_clients(self.__clients)
+            self.__view.display_clients(clients)
 
     def search_client_by_cpf(self) -> None:
         cpf = self.__view.get_client_cpf()
@@ -77,15 +84,13 @@ class ClientController:
         client = self._find_client_by_cpf(cpf)
 
         if client:
-            new_data = self.__view.get_client_update_data()
-            if new_data.get("name"):
-                client.username = new_data["name"]
-            if new_data.get("email"):
-                client.email = new_data["email"]
-            if new_data.get("phone"):
-                client.phone = new_data["phone"]
-            if new_data.get("address"):
-                client.address = new_data["address"]
+            updated_data = self.__view.get_client_update_data()
+            for field in ("name", "email", "phone", "address"):
+                value = updated_data.get(field, "")
+                if value != "":
+                    setattr(client, field, value)
+
+            self.__clients_dao.update(client)
             self.__view.display_success_message(
                 "Cliente atualizado com sucesso!"
             )
@@ -97,7 +102,7 @@ class ClientController:
         client = self._find_client_by_cpf(cpf)
 
         if client:
-            self.__clients.remove(client)
+            self.__clients_dao.delete(client.id)
             self.__view.display_success_message(
                 "Cliente removido com sucesso!"
             )
@@ -123,7 +128,7 @@ class ClientController:
         self.__view.display_client_report(dict(client_data))
 
     def _find_client_by_cpf(self, cpf: str) -> Client | None:
-        for client in self.__clients:
+        for client in self.__clients_dao.get_all():
             if client.cpf == cpf:
                 return client
         return None
@@ -145,14 +150,12 @@ class ClientController:
                 "address": "Rua B, 456",
             },
         ]
-
-        for client in initial_clients:
+        for c in initial_clients:
             new_client = Client(
-                name=client["name"],
-                cpf=client["cpf"],
-                email=client["email"],
-                phone=client["phone"],
-                address=client["address"],
+                name=c["name"],
+                cpf=c["cpf"],
+                email=c["email"],
+                phone=c["phone"],
+                address=c["address"],
             )
-            self.__clients.append(new_client)
-            time.sleep(0.1)
+            self.__clients_dao.add(new_client)

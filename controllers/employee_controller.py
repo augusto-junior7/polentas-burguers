@@ -1,6 +1,7 @@
 from collections import defaultdict
 from typing import List
 
+from daos.employees_dao import EmployeesDAO
 from models.employee import Employee
 from models.order import Order
 from views.employee_view import EmployeeView
@@ -8,13 +9,14 @@ from views.employee_view import EmployeeView
 
 class EmployeeController:
     def __init__(self):
-        self.__employees: List[Employee] = []
+        self.__employees_dao = EmployeesDAO()
         self.__view = EmployeeView()
-        self._add_initial_employees()
+        if not self.__employees_dao.get_all():
+            self._add_initial_employees()
 
     @property
     def employees(self) -> List[Employee]:
-        return self.__employees
+        return self.__employees_dao.get_all()
 
     def run_employee_menu(self, order_controller):
         while True:
@@ -45,22 +47,22 @@ class EmployeeController:
             phone=data["phone"],
             position=data["position"],
         )
-        for emp in self.__employees:
+        for emp in self.__employees_dao.get_all():
             if emp.cpf == new_employee.cpf:
                 self.__view.display_error_message(
                     "Funcionário com este CPF já existe."
                 )
                 return
-        self.__employees.append(new_employee)
+        self.__employees_dao.add(new_employee)
         self.__view.display_success_message(
             "Funcionário cadastrado com sucesso!"
         )
 
     def list_employees(self) -> None:
-        if not self.__employees:
+        if not self.__employees_dao.get_all():
             self.__view.display_message("Nenhum funcionário cadastrado.")
         else:
-            self.__view.display_employees(self.__employees)
+            self.__view.display_employees(self.__employees_dao.get_all())
 
     def search_employee_by_cpf(self) -> None:
         cpf = self.__view.get_employee_cpf()
@@ -78,11 +80,12 @@ class EmployeeController:
             return
 
         updated_data = self.__view.get_employee_data()
-        employee.name = updated_data["name"]
-        employee.email = updated_data["email"]
-        employee.phone = updated_data["phone"]
-        employee.position = updated_data["position"]
+        for field in ("name", "email", "phone", "position"):
+            value = updated_data.get(field, "")
+            if value != "":
+                setattr(employee, field, value)
 
+        self.__employees_dao.update(employee)
         self.__view.display_success_message(
             "Dados do funcionário atualizados com sucesso!"
         )
@@ -91,7 +94,7 @@ class EmployeeController:
         cpf = self.__view.get_employee_cpf()
         employee = self._find_employee_by_cpf(cpf)
         if employee:
-            self.__employees.remove(employee)
+            self.__employees_dao.delete(employee.id)
             self.__view.display_success_message(
                 "Funcionário removido com sucesso!"
             )
@@ -99,10 +102,10 @@ class EmployeeController:
             self.__view.display_error_message("Funcionário não encontrado.")
 
     def get_lowest_workload_employee(self, orders) -> Employee:
-        if not self.__employees:
+        if not self.__employees_dao.get_all():
             raise ValueError("Nenhum funcionário disponível.")
 
-        workload = {emp.cpf: 0 for emp in self.__employees}
+        workload = {emp.cpf: 0 for emp in self.__employees_dao.get_all()}
         for order in orders:
             workload[order.employee.cpf] += 1
 
@@ -130,7 +133,7 @@ class EmployeeController:
         self.__view.display_employee_sales_report(dict(sales_data))
 
     def _find_employee_by_cpf(self, cpf: str) -> Employee | None:
-        for employee in self.__employees:
+        for employee in self.__employees_dao.get_all():
             if employee.cpf == cpf:
                 return employee
         return None
@@ -154,12 +157,11 @@ class EmployeeController:
         ]
 
         for e in initial_employees:
-            self.__employees.append(
-                Employee(
-                    name=e["name"],
-                    cpf=e["cpf"],
-                    email=e["email"],
-                    phone=e["phone"],
-                    position=e["position"],
-                )
+            new_employee = Employee(
+                name=e["name"],
+                cpf=e["cpf"],
+                email=e["email"],
+                phone=e["phone"],
+                position=e["position"],
             )
+            self.__employees_dao.add(new_employee)

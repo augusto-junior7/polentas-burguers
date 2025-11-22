@@ -4,6 +4,7 @@ from typing import List
 from controllers.client_controller import ClientController
 from controllers.employee_controller import EmployeeController
 from controllers.menu_controller import MenuController
+from daos.orders_dao import OrdersDAO
 from models.order import Order
 from views.order_view import OrderView
 
@@ -15,7 +16,7 @@ class OrderController:
         employee_controller: EmployeeController,
         menu_controller: MenuController,
     ):
-        self.__orders: List[Order] = []
+        self.__orders_dao = OrdersDAO()
         self.__view = OrderView()
         self.__client_controller = client_controller
         self.__employee_controller = employee_controller
@@ -23,7 +24,7 @@ class OrderController:
 
     @property
     def orders(self) -> List[Order]:
-        return self.__orders
+        return self.__orders_dao.get_all()
 
     def run_order_menu(self):
         while True:
@@ -33,8 +34,10 @@ class OrderController:
             elif option == "2":
                 self.list_orders()
             elif option == "3":
-                self.cancel_order()
+                self.finish_order()
             elif option == "4":
+                self.cancel_order()
+            elif option == "5":
                 self.generate_product_sales_report()
             elif option == "0":
                 break
@@ -60,7 +63,7 @@ class OrderController:
             return
 
         employee = self.__employee_controller.get_lowest_workload_employee(
-            self.__orders
+            self.__orders_dao.get_all()
         )
         self.__view.display_message(
             f"O funcionário '{employee.name}' está atendendo o pedido."
@@ -94,26 +97,43 @@ class OrderController:
             )
             return
 
-        self.__orders.append(new_order)
+        self.__orders_dao.add(new_order)
         self.__view.display_final_order_summary(new_order)
         self.__view.display_success_message("Pedido criado com sucesso!")
 
     def list_orders(self) -> None:
-        self.__view.display_order_list(self.__orders)
+        self.__view.display_order_list(self.__orders_dao.get_all())
+
+    def finish_order(self) -> None:
+        if not self.__orders_dao.get_all():
+            self.__view.display_message("Nenhum pedido para finalizar.")
+            return
+
+        self.list_orders()
+        order_id = self.__view.get_order_id_for_update("finalizar")
+        order = self._find_order_by_id(order_id)
+        if not order:
+            self.__view.display_error_message("Pedido não encontrado.")
+            return
+
+        order.status = "Concluído"
+        self.__orders_dao.update(order)
+        self.__view.display_success_message("Pedido finalizado com sucesso!")
 
     def cancel_order(self) -> None:
-        if not self.__orders:
+        if not self.__orders_dao.get_all():
             self.__view.display_message("Nenhum pedido para cancelar.")
             return
 
         self.list_orders()
-        order_id = self.__view.get_order_id_for_update()
+        order_id = self.__view.get_order_id_for_update("cancelar")
         order = self._find_order_by_id(order_id)
         if not order:
             self.__view.display_error_message("Pedido não encontrado.")
             return
 
         order.status = "Cancelado"
+        self.__orders_dao.update(order)
         self.__view.display_success_message("Pedido cancelado com sucesso!")
 
     def generate_product_sales_report(self) -> None:
@@ -121,15 +141,21 @@ class OrderController:
             "Gerando Relatório de Vendas de Produtos..."
         )
 
-        if not self.__orders:
+        orders = [
+            order
+            for order in self.__orders_dao.get_all()
+            if order.status == "Concluído"
+        ]
+        
+        if not orders:
             self.__view.display_error_message(
-                "Nenhum pedido encontrado para gerar um relatório de vendas de produtos."
+                "Nenhum pedido concluído encontrado para gerar um relatório de vendas de produtos."
             )
             return
 
         sales_data = defaultdict(lambda: {"quantity": 0, "revenue": 0.0})
 
-        for order in self.__orders:
+        for order in orders:
             for item in order.items:
                 product_name = item.menu_item.name
                 sales_data[product_name]["quantity"] += item.quantity
@@ -138,7 +164,7 @@ class OrderController:
         self.__view.display_product_sales_report(dict(sales_data))
 
     def _find_order_by_id(self, order_id: int) -> Order | None:
-        for order in self.__orders:
+        for order in self.__orders_dao.get_all():
             if order.id == order_id:
                 return order
         return None
