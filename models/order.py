@@ -79,6 +79,11 @@ class Order:
         self.__status = value
 
     def add_item(self, menu_item: MenuItem, quantity: int) -> None:
+        for item in self.__items:
+            if item.menu_item.name == menu_item.name:
+                item.quantity += quantity
+                self._recalculate_total()
+                return
         new_item = OrderItem(menu_item, quantity)
         self.__items.append(new_item)
         self._recalculate_total()
