@@ -45,9 +45,11 @@ class MenuView(AbstractView):
         print("\n--- Menu Completo ---")
         if not items:
             print("O cardápio está vazio.")
+        index = 0
         for item in items:
+            index += 1
             base_info = (
-                f"- {item.name} (R$ {item.price:.2f}): {item.description}"
+                f"{index}. {item.name} (R$ {item.price:.2f}): {item.description}"
             )
             if isinstance(item, Burger):
                 print(f"{base_info} [Tipo: {item.patty_type}]")

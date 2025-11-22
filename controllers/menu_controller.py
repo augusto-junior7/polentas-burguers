@@ -71,7 +71,7 @@ class MenuController:
     def select_menu_item_by_number(self) -> None:
         items = list(self.__menu.items)
         self.__view.display_menu_items(items)
-        index = self.__view.get_item_index(len(items))
+        index = self.__view.get_item_index()
         if 0 <= index < len(items):
             selected_item = items[index]
             self.__view.display_success_message(

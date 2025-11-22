@@ -70,9 +70,7 @@ class OrderController:
 
         while True:
             self.__menu_controller.list_menu_items()
-            index = self.__view.get_item_index(
-                len(self.__menu_controller.menu.items)
-            )
+            index = self.__view.get_item_index()
             if index == -1:
                 break
 

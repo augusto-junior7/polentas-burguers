@@ -34,12 +34,12 @@ class OrderView(AbstractView):
         except ValueError:
             return 0
 
-    def get_item_index(self, max_index):
+    def get_item_index(self):
         try:
             index = (
                 int(
                     input(
-                        f"Digite o número do item desejado (1 a {max_index}, ou 0 para concluir): "
+                        f"Digite o número do item desejado (ou 0 para concluir): "
                     )
                 )
                 - 1
