@@ -9,17 +9,18 @@ class OrderView(AbstractView):
         print("\n--- Menu de Pedidos ---")
         print("1: Criar Pedido")
         print("2: Listar Pedidos")
-        print("3: Cancelar Pedido")
-        print("4: Gerar Relatório de Vendas de Produtos")
+        print("3: Finalizar Pedido")
+        print("4: Cancelar Pedido")
+        print("5: Gerar Relatório de Vendas de Produtos")
         print("0: Voltar ao Menu Principal")
         return input("Selecione uma opção: ")
 
     def get_client_cpf_for_order(self) -> str:
         return input("Digite o CPF do cliente para este pedido: ")
 
-    def get_order_id_for_update(self) -> int:
+    def get_order_id_for_update(self, message: str = "modificar") -> int:
         try:
-            return int(input("Digite o ID do pedido a ser cancelado: "))
+            return int(input(f"Digite o ID do pedido para {message}: "))
         except ValueError:
             return 0
 
