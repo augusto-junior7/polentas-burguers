@@ -1,5 +1,3 @@
-import random
-import time
 from collections import defaultdict
 from typing import List
 
@@ -41,7 +39,6 @@ class EmployeeController:
     def add_employee(self) -> None:
         data = self.__view.get_employee_data()
         new_employee = Employee(
-            id=random.randint(100000000, 999999999),
             name=data["name"],
             cpf=data["cpf"],
             email=data["email"],
@@ -140,24 +137,21 @@ class EmployeeController:
 
     def _add_initial_employees(self) -> None:
         initial_employees = [
-            Employee(
-                id=random.randint(100000000, 999999999),
-                name="Carlos Silva",
-                cpf="15469663078",
-                email="carlos.silva@example.com",
-                phone="4991234-5678",
-                position="Gerente",
-            ),
-            Employee(
-                id=random.randint(100000000, 999999999),
-                name="Maria Oliveira",
-                cpf="58778936020",
-                email="maria.oliveira@example.com",
-                phone="4899123-4567",
-                position="Atendente",
-            ),
+            {
+                "name": "Carlos Silva",
+                "cpf": "15469663078",
+                "email": "carlos.silva@example.com",
+                "phone": "4991234-5678",
+                "position": "Gerente",
+            },
+            {
+                "name": "Maria Oliveira",
+                "cpf": "58778936020",
+                "email": "maria.oliveira@example.com",
+                "phone": "4899123-4567",
+                "position": "Atendente",
+            },
         ]
 
         for e in initial_employees:
             self.__employees.append(e)
-            time.sleep(0.1)

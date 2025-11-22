@@ -43,14 +43,17 @@ class ClientController:
             )
             return
 
-        new_client = Client(
-            id=random.randint(100000000, 999999999),
-            name=client_data["name"],
-            cpf=client_data["cpf"],
-            email=client_data["email"],
-            phone=client_data["phone"],
-            address=client_data["address"],
-        )
+        try:
+            new_client = Client(
+                name=client_data["name"],
+                cpf=client_data["cpf"],
+                email=client_data["email"],
+                phone=client_data["phone"],
+                address=client_data["address"],
+            )
+        except Exception as e:
+            self.__view.display_error_message(f"Erro ao criar cliente: {e}")
+            return
 
         self.__clients.append(new_client)
         self.__view.display_success_message("Cliente cadastrado com sucesso!")
@@ -145,7 +148,6 @@ class ClientController:
 
         for client in initial_clients:
             new_client = Client(
-                id=random.randint(100000000, 999999999),
                 name=client["name"],
                 cpf=client["cpf"],
                 email=client["email"],
