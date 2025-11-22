@@ -13,33 +13,33 @@ from utils.phone_checker import is_valid_phone
 class User(ABC):
     @abstractmethod
     def __init__(self, name: str, cpf: str, email: str, phone: str):
-        self._id = uuid.uuid4().int
-        self._name = None
-        self._cpf = None
-        self._email = None
-        self._phone = None
+        self.__id = uuid.uuid4().int
+        self.__name = None
+        self.__cpf = None
+        self.__email = None
+        self.__phone = None
 
         if isinstance(name, str):
-            self._name = name
+            self.__name = name
         else:
             raise IsNotInstanceError("Name must be a string")
         if isinstance(cpf, str):
             if is_valid_cpf(cpf):
-                self._cpf = cpf
+                self.__cpf = cpf
             else:
                 raise InvalidCPFError("Invalid CPF")
         else:
             raise IsNotInstanceError("CPF must be a string")
         if isinstance(email, str):
             if is_valid_email(email):
-                self._email = email
+                self.__email = email
             else:
                 raise InvalidEmailError("Invalid email address")
         else:
             raise IsNotInstanceError("Email must be a string")
         if isinstance(phone, str):
             if is_valid_phone(phone):
-                self._phone = phone
+                self.__phone = phone
             else:
                 raise InvalidPhoneError("Invalid phone number")
         else:
@@ -47,28 +47,28 @@ class User(ABC):
 
     @property
     def id(self) -> int:
-        return self._id
+        return self.__id
 
     @property
     def name(self) -> str:
-        return self._name
+        return self.__name
 
     @name.setter
     def name(self, value: str):
         if isinstance(value, str):
-            self._name = value
+            self.__name = value
         else:
             raise IsNotInstanceError("Name must be a string")
 
     @property
     def cpf(self) -> str:
-        return self._cpf
+        return self.__cpf
 
     @cpf.setter
     def cpf(self, value: str):
         if isinstance(value, str):
             if is_valid_cpf(value):
-                self._cpf = value
+                self.__cpf = value
             else:
                 raise InvalidCPFError("Invalid CPF")
         else:
@@ -76,13 +76,13 @@ class User(ABC):
 
     @property
     def email(self) -> str:
-        return self._email
+        return self.__email
 
     @email.setter
     def email(self, value: str):
         if isinstance(value, str):
             if is_valid_email(value):
-                self._email = value
+                self.__email = value
             else:
                 raise InvalidEmailError("Invalid email address")
         else:
@@ -90,13 +90,13 @@ class User(ABC):
 
     @property
     def phone(self) -> str:
-        return self._phone
+        return self.__phone
 
     @phone.setter
     def phone(self, value: str):
         if isinstance(value, str):
             if is_valid_phone(value):
-                self._phone = value
+                self.__phone = value
             else:
                 raise InvalidPhoneError("Invalid phone number")
         else:

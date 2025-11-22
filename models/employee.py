@@ -11,46 +11,46 @@ class Employee(User):
         position: str,
     ):
         super().__init__(name, cpf, email, phone)
-        self._position = None
-        self._salary = None
+        self.__position = None
+        self.__salary = None
 
         if isinstance(position, str):
-            self._position = position
+            self.__position = position
 
     @property
     def id(self) -> int:
-        return self._id
+        return self.__id
 
     @id.setter
     def id(self, value: int):
         if isinstance(value, int):
-            self._id = value
+            self.__id = value
         else:
             raise IsNotInstanceError("ID must be an integer")
 
     @property
     def position(self) -> str:
-        return self._position
+        return self.__position
 
     @position.setter
     def position(self, value: str):
         if isinstance(value, str):
-            self._position = value
+            self.__position = value
         else:
             raise IsNotInstanceError("Position must be a string")
 
     @property
     def salary(self) -> float:
-        return self._salary
+        return self.__salary
 
     @salary.setter
     def salary(self, value: float):
         if isinstance(value, (int, float)):
-            self._salary = float(value)
+            self.__salary = float(value)
         else:
             raise IsNotInstanceError("Salary must be a number")
 
     def display_info(self):
         print(
-            f"[Funcionário] ID: {self._id} | Nome: {self._name} | Cargo: {self._position}"
+            f"[Funcionário] ID: {self.__id} | Nome: {self.__name} | Cargo: {self.__position}"
         )

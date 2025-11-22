@@ -7,15 +7,15 @@ class Drink(MenuItem):
         self, name: str, price: float, description: str, volume_ml: int
     ):
         super().__init__(name, price, description)
-        self._volume_ml = None
+        self.__volume_ml = None
         self.volume_ml = volume_ml
 
     @property
     def volume_ml(self) -> int:
-        return self._volume_ml
+        return self.__volume_ml
 
     @volume_ml.setter
     def volume_ml(self, value: int):
         if not isinstance(value, int):
             raise IsNotInstanceError("Volume must be an integer")
-        self._volume_ml = value
+        self.__volume_ml = value

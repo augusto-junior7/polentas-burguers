@@ -12,25 +12,25 @@ class Client(User):
         address: str,
     ):
         super().__init__(name, cpf, email, phone)
-        self._address = None
+        self.__address = None
 
         if isinstance(address, str):
-            self._address = address
+            self.__address = address
         else:
             raise IsNotInstanceError("Address must be a string")
 
     @property
     def address(self) -> str:
-        return self._address
+        return self.__address
 
     @address.setter
     def address(self, value: str):
         if isinstance(value, str):
-            self._address = value
+            self.__address = value
         else:
             raise IsNotInstanceError("Address must be a string")
 
     def display_info(self):
         print(
-            f"[Cliente] ID: {self._id} | CPF: {self._cpf} | Nome: {self._name} | Endereço: {self._address}"
+            f"[Cliente] ID: {self.__id} | CPF: {self.__cpf} | Nome: {self.__name} | Endereço: {self.__address}"
         )
