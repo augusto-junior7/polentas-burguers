@@ -19,3 +19,6 @@ class ClientsDAO(DAO):
     def update(self, client: Client):
         if client is not None and isinstance(client, Client):
             super().update(client.id, client)
+
+    def delete(self, client_id: int):
+        super().delete(client_id)

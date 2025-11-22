@@ -16,12 +16,12 @@ class OrdersDAO(DAO):
             return order
         return None
 
+    def get_all(self) -> list:
+        return list(super().get_all())
+
     def update(self, order: Order):
         if order is not None and isinstance(order, Order):
             super().add(order.id, order)
 
-    def remove(self, order_id: int):
-        super().remove(order_id)
-
-    def get_all(self) -> list:
-        return list(super().get_all())
+    def delete(self, order_id: int):
+        super().delete(order_id)

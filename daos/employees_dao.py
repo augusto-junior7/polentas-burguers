@@ -15,7 +15,13 @@ class EmployeesDAO(DAO):
         if employee is not None and isinstance(employee, Employee):
             return employee
         return None
+    
+    def get_all(self) -> list:
+        return list(super().get_all())
 
     def update(self, employee: Employee):
         if employee is not None and isinstance(employee, Employee):
             super().update(employee.id, employee)
+
+    def delete(self, employee_id: int):
+        super().remove(employee_id)

@@ -44,7 +44,7 @@ class DAO(ABC):
         except KeyError:
             raise KeyErrorException()
 
-    def remove(self, key) -> None:
+    def delete(self, key) -> None:
         try:
             self.__cache.pop(key)
             self.__dump()
