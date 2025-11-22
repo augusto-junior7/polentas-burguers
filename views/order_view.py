@@ -25,7 +25,7 @@ class OrderView(AbstractView):
 
     def get_item_to_add(self) -> str:
         return input(
-            "Digite o nome do item a ser adicionado (ou digite 'concluir' para finalizar): "
+            "Digite o número do item a ser adicionado (ou digite 'concluir' para finalizar): "
         )
 
     def get_quantity(self) -> int:

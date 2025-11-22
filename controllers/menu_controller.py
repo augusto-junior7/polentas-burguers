@@ -65,8 +65,20 @@ class MenuController:
             self.__view.display_error_message(f"Falha ao adicionar item: {e}")
 
     def list_menu_items(self) -> None:
-        items = self.__menu.items
+        items = list(self.__menu.items)
         self.__view.display_menu_items(items)
+
+    def select_menu_item_by_number(self) -> None:
+        items = list(self.__menu.items)
+        self.__view.display_menu_items(items)
+        index = self.__view.get_item_index(len(items))
+        if 0 <= index < len(items):
+            selected_item = items[index]
+            self.__view.display_success_message(
+                f"Você selecionou: {selected_item.name}"
+            )
+        else:
+            self.__view.display_error_message("Índice inválido.")
 
     def remove_menu_item(self) -> None:
         item_name = self.__view.get_item_name()

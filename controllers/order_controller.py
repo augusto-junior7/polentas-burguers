@@ -70,14 +70,17 @@ class OrderController:
 
         while True:
             self.__menu_controller.list_menu_items()
-            item_name = self.__view.get_item_to_add()
-
-            if item_name.lower() == "concluir" or item_name == "":
+            index = self.__view.get_item_index(
+                len(self.__menu_controller.menu.items)
+            )
+            if index == -1:
                 break
 
-            menu_item = self.__menu_controller.menu.get_item_by_name(item_name)
-            if not menu_item:
-                self.__view.display_error_message("Item não encontrado.")
+            items = list(self.__menu_controller.menu.items)
+            if 0 <= index < len(items):
+                menu_item = items[index]
+            else:
+                self.__view.display_error_message("Índice inválido.")
                 continue
 
             quantity = self.__view.get_quantity()
