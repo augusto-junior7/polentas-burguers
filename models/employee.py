@@ -18,17 +18,6 @@ class Employee(User):
             self.__position = position
 
     @property
-    def id(self) -> int:
-        return self.__id
-
-    @id.setter
-    def id(self, value: int):
-        if isinstance(value, int):
-            self.__id = value
-        else:
-            raise IsNotInstanceError("ID must be an integer")
-
-    @property
     def position(self) -> str:
         return self.__position
 
