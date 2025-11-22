@@ -39,6 +39,9 @@ class EmployeeView(AbstractView):
             employee.display_info()
         print("-------------------")
 
+    def get_employee_cpf(self) -> str:
+        return input("Informe o CPF do funcionário: ")
+
     def display_employee_sales_report(self, sales_data: dict) -> None:
         print("\n=== Relatório de Vendas por Funcionário ===")
         if not sales_data:
