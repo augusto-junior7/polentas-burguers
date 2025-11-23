@@ -36,7 +36,7 @@ O _Polenta's Burguers_ simula um sistema básico de gerenciamento de pedidos, cl
 
 ## Execução
 
-Basta rodar o arquivo principal (caso já exista no projeto):
+Basta rodar o arquivo principal:
 
 ```bash
 python main.py
