@@ -40,13 +40,24 @@ class EmployeeController:
 
     def add_employee(self) -> None:
         data = self.__view.get_employee_data()
-        new_employee = Employee(
-            name=data["name"],
-            cpf=data["cpf"],
-            email=data["email"],
-            phone=data["phone"],
-            position=data["position"],
-        )
+
+        if data["cpf"] == "":
+            return
+
+        try:
+            new_employee = Employee(
+                name=data["name"],
+                cpf=data["cpf"],
+                email=data["email"],
+                phone=data["phone"],
+                position=data["position"],
+            )
+        except Exception as e:
+            self.__view.display_error_message(
+                f"Erro ao criar funcionário: {e}"
+            )
+            return
+
         for emp in self.__employees_dao.get_all():
             if emp.cpf == new_employee.cpf:
                 self.__view.display_error_message(
