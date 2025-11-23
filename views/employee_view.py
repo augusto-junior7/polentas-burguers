@@ -1,66 +1,142 @@
 from typing import Any, Dict, List
 
+import FreeSimpleGUI as sg
+
 from models.employee import Employee
 from views.abstract_view import AbstractView
 
 
 class EmployeeView(AbstractView):
     def display_employee_menu(self) -> str:
-        print("\n--- Gestão de Funcionários ---")
-        print("1: Adicionar Funcionário")
-        print("2: Listar Funcionários")
-        print("3: Buscar Funcionário por CPF")
-        print("4: Atualizar Dados do Funcionário")
-        print("5: Remover Funcionário")
-        print("6: Gerar Relatório de Funcionários")
-        print("0: Voltar ao Menu Principal")
-        return input("Escolha uma opção: ")
+        layout = [
+            [sg.Text("Gestão de Funcionários", font=("Arial", 20))],
+            [sg.Button("Adicionar Funcionário", key="1", size=(30, 2))],
+            [sg.Button("Listar Funcionários", key="2", size=(30, 2))],
+            [sg.Button("Buscar Funcionário por CPF", key="3", size=(30, 2))],
+            [
+                sg.Button(
+                    "Atualizar Dados do Funcionário", key="4", size=(30, 2)
+                )
+            ],
+            [sg.Button("Remover Funcionário", key="5", size=(30, 2))],
+            [
+                sg.Button(
+                    "Gerar Relatório de Funcionários", key="6", size=(30, 2)
+                )
+            ],
+            [sg.Button("Voltar ao Menu Principal", key="0", size=(30, 2))],
+        ]
+        window = sg.Window(
+            "Menu Funcionários", layout, element_justification="c"
+        )
+        event, values = window.read()
+        window.close()
+        if event is None:
+            return "0"
+        return event
 
     def get_employee_data(self) -> Dict[str, Any]:
-        print("--- Cadastro de Funcionário (vazio mantém igual) ---")
-        name = input("Nome: ")
-        cpf = input("CPF: ")
-        email = input("Email: ")
-        phone = input("Telefone: ")
-        position = input("Cargo: ")
+        layout = [
+            [sg.Text("Cadastro de Funcionário", font=("Arial", 15))],
+            [sg.Text("Nome:", size=(10, 1)), sg.InputText(key="name")],
+            [sg.Text("CPF:", size=(10, 1)), sg.InputText(key="cpf")],
+            [sg.Text("Email:", size=(10, 1)), sg.InputText(key="email")],
+            [sg.Text("Telefone:", size=(10, 1)), sg.InputText(key="phone")],
+            [sg.Text("Cargo:", size=(10, 1)), sg.InputText(key="position")],
+            [sg.Button("Salvar"), sg.Button("Cancelar")],
+        ]
+        window = sg.Window("Cadastro de Funcionário", layout)
+        event, values = window.read()
+        window.close()
+        if event == "Salvar":
+            return values
         return {
-            "name": name,
-            "cpf": cpf,
-            "email": email,
-            "phone": phone,
-            "position": position,
+            "name": "",
+            "cpf": "",
+            "email": "",
+            "phone": "",
+            "position": "",
         }
 
     def display_employees(self, employees: List[Employee]) -> None:
-        print("--- Lista de Funcionários ---")
         if not employees:
-            print("Nenhum funcionário encontrado.")
-        for employee in employees:
-            employee.display_info()
-        print("-------------------")
-
-    def get_employee_cpf(self) -> str:
-        return input("Informe o CPF do funcionário: ")
-
-    def display_employee_sales_report(self, sales_data: dict) -> None:
-        print("\n=== Relatório de Vendas por Funcionário ===")
-        if not sales_data:
-            print("Nenhum dado disponível.")
+            sg.popup("Nenhum funcionário encontrado.")
             return
 
-        print(f"{'Funcionário':<30} {'Pedidos':<15} {'Receita (R$)':<15}")
-        print("-" * 60)
+        data = []
+        for emp in employees:
+            data.append(
+                [emp.id, emp.cpf, emp.name, emp.email, emp.phone, emp.position]
+            )
 
+        layout = [
+            [
+                sg.Table(
+                    values=data,
+                    headings=[
+                        "ID",
+                        "CPF",
+                        "Nome",
+                        "Email",
+                        "Telefone",
+                        "Cargo",
+                    ],
+                    auto_size_columns=True,
+                    display_row_numbers=False,
+                    justification="left",
+                    num_rows=min(25, len(data)),
+                )
+            ],
+            [sg.Button("Fechar")],
+        ]
+        window = sg.Window("Lista de Funcionários", layout)
+        window.read()
+        window.close()
+
+    def get_employee_cpf(self) -> str:
+        return (
+            sg.popup_get_text(
+                "Informe o CPF do funcionário:", title="Buscar Funcionário"
+            )
+            or ""
+        )
+
+    def display_employee_sales_report(self, sales_data: dict) -> None:
+        if not sales_data:
+            sg.popup("Nenhum dado disponível.")
+            return
+
+        data = []
         total_orders = 0
         total_revenue = 0.0
 
-        for employee_name, data in sorted(sales_data.items()):
-            orders = data["orders"]
-            revenue = data["revenue"]
+        for employee_name, d in sorted(sales_data.items()):
+            orders = d["orders"]
+            revenue = d["revenue"]
             total_orders += orders
             total_revenue += revenue
-            print(f"{employee_name:<30} {orders:<15} {revenue:<15.2f}")
+            data.append([employee_name, orders, f"{revenue:.2f}"])
 
-        print("-" * 60)
-        print(f"{'TOTAL':<30} {total_orders:<15} {total_revenue:<15.2f}")
-        print("=" * 60)
+        data.append(["TOTAL", total_orders, f"{total_revenue:.2f}"])
+
+        layout = [
+            [
+                sg.Text(
+                    "Relatório de Vendas por Funcionário",
+                    font=("Arial", 15),
+                )
+            ],
+            [
+                sg.Table(
+                    values=data,
+                    headings=["Funcionário", "Pedidos", "Receita (R$)"],
+                    auto_size_columns=True,
+                    justification="left",
+                    num_rows=min(25, len(data)),
+                )
+            ],
+            [sg.Button("Fechar")],
+        ]
+        window = sg.Window("Relatório", layout)
+        window.read()
+        window.close()
