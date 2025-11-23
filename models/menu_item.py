@@ -1,6 +1,5 @@
 import uuid
 from abc import ABC, abstractmethod
-from datetime import datetime
 
 from exceptions.is_not_instance import IsNotInstanceError
 
