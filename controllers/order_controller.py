@@ -45,10 +45,9 @@ class OrderController:
                 self.__view.display_error_message("Opção inválida.")
 
     def create_order(self) -> None:
-        self.__view.display_message("--- Iniciando Novo Pedido ---")
-
-        self.__client_controller.list_clients()
         client_cpf = self.__view.get_client_cpf_for_order()
+        if client_cpf == "":
+            return
         client = self.__client_controller._find_client_by_cpf(client_cpf)
         if not client:
             self.__view.display_error_message(
@@ -72,24 +71,15 @@ class OrderController:
         new_order = Order(client=client, employee=employee)
 
         while True:
-            self.__menu_controller.list_menu_items()
-            index = self.__view.get_item_index()
+            items = list(self.__menu_controller.menu.items)
+            index, quantity = self.__view.get_item_and_quantity(items)
+
             if index == -1:
                 break
 
-            items = list(self.__menu_controller.menu.items)
-            if 0 <= index < len(items):
-                menu_item = items[index]
-            else:
-                self.__view.display_error_message("Índice inválido.")
-                continue
-
-            quantity = self.__view.get_quantity()
-            if quantity > 0:
-                new_order.add_item(menu_item, quantity)
-                self.__view.display_current_order(new_order)
-            else:
-                self.__view.display_error_message("Quantidade inválida.")
+            menu_item = items[index]
+            new_order.add_item(menu_item, quantity)
+            self.__view.display_current_order(new_order)
 
         if not new_order.items:
             self.__view.display_message(
@@ -109,8 +99,10 @@ class OrderController:
             self.__view.display_message("Nenhum pedido para finalizar.")
             return
 
-        self.list_orders()
-        order_id = self.__view.get_order_id_for_update("finalizar")
+        orders = self.__orders_dao.get_all()
+        order_id = self.__view.get_order_id_for_update(orders, "finalizar")
+        if order_id == 0:
+            return
         order = self._find_order_by_id(order_id)
         if not order:
             self.__view.display_error_message("Pedido não encontrado.")
@@ -125,8 +117,10 @@ class OrderController:
             self.__view.display_message("Nenhum pedido para cancelar.")
             return
 
-        self.list_orders()
-        order_id = self.__view.get_order_id_for_update("cancelar")
+        orders = self.__orders_dao.get_all()
+        order_id = self.__view.get_order_id_for_update(orders, "cancelar")
+        if order_id == 0:
+            return
         order = self._find_order_by_id(order_id)
         if not order:
             self.__view.display_error_message("Pedido não encontrado.")
@@ -146,7 +140,7 @@ class OrderController:
             for order in self.__orders_dao.get_all()
             if order.status == "Concluído"
         ]
-        
+
         if not orders:
             self.__view.display_error_message(
                 "Nenhum pedido concluído encontrado para gerar um relatório de vendas de produtos."

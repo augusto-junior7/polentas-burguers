@@ -82,6 +82,8 @@ class MenuController:
 
     def remove_menu_item(self) -> None:
         item_name = self.__view.get_item_name()
+        if item_name == "":
+            return
         menu = self.menu
         if menu.remove_item(item_name):
             self.__menu_dao.save(menu)

@@ -73,6 +73,8 @@ class ClientController:
 
     def search_client_by_cpf(self) -> None:
         cpf = self.__view.get_client_cpf()
+        if cpf == "":
+            return
         client = self._find_client_by_cpf(cpf)
         if client:
             self.__view.display_clients([client])
@@ -81,6 +83,8 @@ class ClientController:
 
     def update_client(self) -> None:
         cpf = self.__view.get_client_cpf()
+        if cpf == "":
+            return
         client = self._find_client_by_cpf(cpf)
 
         if client:
@@ -99,6 +103,8 @@ class ClientController:
 
     def delete_client(self) -> None:
         cpf = self.__view.get_client_cpf()
+        if cpf == "":
+            return
         client = self._find_client_by_cpf(cpf)
 
         if client:

@@ -66,6 +66,8 @@ class EmployeeController:
 
     def search_employee_by_cpf(self) -> None:
         cpf = self.__view.get_employee_cpf()
+        if cpf == "":
+            return
         employee = self._find_employee_by_cpf(cpf)
         if employee:
             self.__view.display_employee(employee)
@@ -74,6 +76,8 @@ class EmployeeController:
 
     def update_employee(self) -> None:
         cpf = self.__view.get_employee_cpf()
+        if cpf == "":
+            return
         employee = self._find_employee_by_cpf(cpf)
         if not employee:
             self.__view.display_error_message("Funcionário não encontrado.")
@@ -92,6 +96,8 @@ class EmployeeController:
 
     def delete_employee(self) -> None:
         cpf = self.__view.get_employee_cpf()
+        if cpf == "":
+            return
         employee = self._find_employee_by_cpf(cpf)
         if employee:
             self.__employees_dao.delete(employee.id)
