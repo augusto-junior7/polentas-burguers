@@ -131,10 +131,6 @@ class OrderController:
         self.__view.display_success_message("Pedido cancelado com sucesso!")
 
     def generate_product_sales_report(self) -> None:
-        self.__view.display_message(
-            "Gerando Relatório de Vendas de Produtos..."
-        )
-
         orders = [
             order
             for order in self.__orders_dao.get_all()

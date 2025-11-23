@@ -119,10 +119,6 @@ class EmployeeController:
         return self._find_employee_by_cpf(lowest_workload_employee_cpf)
 
     def generate_employee_report(self, orders: List[Order]) -> None:
-        self.__view.display_message(
-            "Gerando Relatório de Vendas por Funcionário..."
-        )
-
         if not orders:
             self.__view.display_error_message(
                 "Nenhum pedido encontrado para gerar um relatório de vendas por funcionário."

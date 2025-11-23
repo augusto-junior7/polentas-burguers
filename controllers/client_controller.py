@@ -43,6 +43,9 @@ class ClientController:
     def add_client(self) -> None:
         client_data = self.__view.get_client_data()
 
+        if client_data["cpf"] == "":
+            return
+
         if self._find_client_by_cpf(client_data["cpf"]):
             self.__view.display_error_message(
                 "Cliente com este CPF já existe."
@@ -116,8 +119,6 @@ class ClientController:
             self.__view.display_error_message("Cliente não encontrado.")
 
     def generate_client_report(self, orders: List[Order]) -> None:
-        self.__view.display_message("Gerando Relatório de Clientes...")
-
         if not orders:
             self.__view.display_error_message(
                 "Nenhum pedido encontrado para gerar um relatório de clientes."
