@@ -59,7 +59,7 @@ class MenuView(AbstractView):
                 }
             except ValueError:
                 sg.popup_error("Preço inválido!")
-                return self.get_common_item_data()  # Retry
+                return self.get_common_item_data()
         return {"name": "", "price": 0.0, "description": ""}
 
     def get_burger_specific_data(self) -> Dict[str, Any]:
